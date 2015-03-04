@@ -7,3 +7,4 @@
   | 15          | Super Ted       | 3          |
   | 16          | Batman          | 6          |
   | 17          | Catwoman        | 6          |
+  | 18          | catwoman        | 12          |
