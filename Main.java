@@ -14,13 +14,14 @@ public class Main {
         // This contains the original text as from file i.e. no lowercase and no space removal
         HashMap<Integer , EmployeeNameId> organisationParsedMapOriginal = organisationParser.getParsedOrganisationMapOriginal();
 
-        // Printing the hash map after construction using overridden toString for testing purpose
-        // System.out.println(organisationParser);
+        // Printing the hash map after construction using overridden toString
+        //System.out.println(organisationParser);
 
         String fromName = UTIL.stringReform(args[1]); // converts the string to lowercase and removes extra spaces
         String toName = UTIL.stringReform(args[2]);
+        boolean ifSameName = fromName.equals(toName);
 
-        PathManager p = new PathManager(fromName , toName , organisationParsedMap , organisationParsedMapOriginal);
+        PathManager p = new PathManager(fromName , toName , organisationParsedMap , organisationParsedMapOriginal , ifSameName);
         ArrayList<String> allPaths = p.getPaths();
         for(String path : allPaths){
             System.out.println(path);

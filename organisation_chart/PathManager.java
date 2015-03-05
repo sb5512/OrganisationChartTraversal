@@ -1,23 +1,24 @@
 package organisation_chart;
 
-import organisation_chart.EmployeeNameId;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class PathManager {
     private final String pathToName;
     private final String pathFromName;
     private final HashMap<Integer , EmployeeNameId> organisationParsedMap;
     private final HashMap<Integer , EmployeeNameId> organisationParsedMapOriginal;
+    private final boolean ifSameName;
 
     public PathManager(String pathFromName , String pathToName , HashMap<Integer , EmployeeNameId> organisationParsedMap ,
-                       HashMap<Integer , EmployeeNameId> organisationParsedMapOriginal){
+                       HashMap<Integer , EmployeeNameId> organisationParsedMapOriginal, boolean ifSameName){
         this.pathFromName = pathFromName;
         this.pathToName = pathToName;
         this.organisationParsedMap = organisationParsedMap;
         this.organisationParsedMapOriginal = organisationParsedMapOriginal;
+        this.ifSameName = ifSameName;
     }
 
     // Uses the getPathHead and getPathBetween helper functions to obtain the names involved in forming a path
@@ -25,6 +26,7 @@ public class PathManager {
         ArrayList<String> allPathsInString = new ArrayList<String>();
         ArrayList<ArrayList<Integer>> pathTo;
         ArrayList<ArrayList<Integer>> pathFrom;
+
         pathFrom = getPathToHead(pathFromName);
         pathTo = getPathToHead(pathToName);
 
@@ -32,6 +34,20 @@ public class PathManager {
             for (ArrayList<Integer> pathT : pathTo){
                 String actualPathString = getPathBetween(pathF, pathT);
                 allPathsInString.add(actualPathString);
+            }
+        }
+
+        // If the required path between two same name superheroes exists, then we only output one
+        // result(i.e. only one path between them).
+        if(ifSameName){
+            Iterator<String> iterator = allPathsInString.iterator();
+            ArrayList<String> tmpArrayForSameName = new ArrayList<String>();
+            while (iterator.hasNext()) {
+                String s = iterator.next();
+                if (s.contains("->")){
+                    tmpArrayForSameName.add(s);
+                    return tmpArrayForSameName;
+                }
             }
         }
         return allPathsInString;
@@ -43,6 +59,7 @@ public class PathManager {
         ArrayList<Integer> pathFromCopy = new ArrayList<Integer>(pathFrom);
         ArrayList<Integer> pathToCopy = new ArrayList<Integer>(pathTo);
         StringBuilder result = new StringBuilder();
+
         int previousPathFromLength = pathFromCopy.size();
         pathFromCopy.removeAll(pathToCopy);
         int currentPathFromLength = previousPathFromLength - pathFromCopy.size();
