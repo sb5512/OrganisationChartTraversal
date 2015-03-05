@@ -23,6 +23,7 @@ public class OrganisationParser {
         return parsedOrganisationMapOriginal;
     }
 
+   // Takes a filename as an input and parses through the file. Outputs hashmaps involving the empolyee id with name.
     private void parseFileProduceMap(String fileName) throws IOException {
         HashMap<Integer , EmployeeNameId> organisationData = new HashMap<Integer, EmployeeNameId>();
         HashMap<Integer , EmployeeNameId> organisationDataOriginal = new HashMap<Integer, EmployeeNameId>();
@@ -58,7 +59,8 @@ public class OrganisationParser {
         parsedOrganisationMapOriginal = organisationDataOriginal;
         parsedOrganisationMap = organisationData;
     }
-
+    
+    // overrides the toString method and prints the elements in hashmap.
     @Override public String toString() {
         StringBuilder result = new StringBuilder();
         String NEW_LINE = System.getProperty("line.separator");
