@@ -49,6 +49,8 @@ public class PathManager {
                     return tmpArrayForSameName;
                 }
             }
+            tmpArrayForSameName.add("Single Name.. Hence no path");
+            return tmpArrayForSameName;
         }
         return allPathsInString;
     }
